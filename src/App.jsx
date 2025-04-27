@@ -9,11 +9,11 @@ import CreateNote from "../pages/CreateNote";
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
+    <Router>
+      <AuthProvider>
         <Navbar />
         <Routes>
-        <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route
             path="/dashboard"
@@ -26,8 +26,8 @@ function App() {
           />
           {/* Add more routes here */}
         </Routes>
-      </Router>
-    </AuthProvider>
+      </AuthProvider>
+    </Router>
   );
 }
 

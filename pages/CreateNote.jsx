@@ -1,9 +1,7 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { createNote } from "../services/notesService";
 
-const CreateNote = () => {
-  const navigate = useNavigate();
+const CreateNote = ({ onNoteAdded }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [error, setError] = useState("");
@@ -11,15 +9,15 @@ const CreateNote = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
     setLoading(true);
-
     try {
-      await createNote({ title, content });
-      navigate("/dashboard"); // Redirect after creating
+      const newNote = await createNote({ title, content });
+      setTitle("");
+      setContent("");
+      if (onNoteAdded) onNoteAdded(newNote); // Trigger re-fetch or update notes
     } catch (err) {
-      console.error(err);
-      setError("Failed to create note.");
+      console.error("Failed to create note:", err);
+      setError("Failed to create note. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -30,7 +28,9 @@ const CreateNote = () => {
       <h1 className="text-2xl font-bold mb-6">Create a New Note</h1>
 
       {error && (
-        <div className="bg-red-100 text-red-700 px-4 py-2 rounded mb-4">{error}</div>
+        <div className="bg-red-100 text-red-700 px-4 py-2 rounded mb-4">
+          {error}
+        </div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">

@@ -1,28 +1,48 @@
-import { createContext, useState, useEffect, useContext } from "react";
-import { getProfile } from "../services/authService"; // fetch user profile
+import React, { createContext, useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import api from "../services/api";
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null); // Store user information
+  const [loading, setLoading] = useState(true); // Track loading state
+  const navigate = useNavigate();
 
+  // Fetch the user's profile on app load
   useEffect(() => {
-    const fetchUser = async () => {
+    const fetchProfile = async () => {
       try {
-        const data = await getProfile();
-        setUser(data.user);
+        const response = await api.get("/auth/profile");
+        setUser(response.data.user); // Restore user state
       } catch (err) {
-        console.error("Not authenticated yet");
+        console.error("Not authenticated:", err);
+        setUser(null); // Clear user state if not authenticated
       } finally {
-        setLoading(false);
+        setLoading(false); // Stop loading
       }
     };
-    fetchUser();
+
+    fetchProfile();
   }, []);
 
+  const login = (userData) => {
+    setUser(userData); // Save user info in the context
+    navigate("/dashboard"); // Redirect to notes page after login
+  };
+
+  const logout = async () => {
+    try {
+      await api.post("/auth/logout");
+      setUser(null);
+      navigate("/login"); // Redirect to login page after logout
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, setUser, loading }}>
+    <AuthContext.Provider value={{ user, setUser, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );
