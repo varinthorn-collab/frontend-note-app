@@ -6,6 +6,8 @@ import ProtectedRoute from "../components/common/ProtectedRoute";
 import Navbar from "../components/common/Navbar";
 import HomePage from "../pages/HomePage";
 import CreateNote from "../pages/CreateNote";
+import NoteDetailsPage from "../pages/NoteDetailsPage";
+import PublicProfilePage from "../pages/PublicProfilePage";
 
 function App() {
   return (
@@ -20,11 +22,19 @@ function App() {
             element={
               <ProtectedRoute>
                 <DashboardPage />
-                <CreateNote />
               </ProtectedRoute>
             }
           />
           {/* Add more routes here */}
+          <Route
+            path="/notes/:noteId"
+            element={
+              <ProtectedRoute>
+                <NoteDetailsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/profile/:userId" element={<PublicProfilePage />} />
         </Routes>
       </AuthProvider>
     </Router>

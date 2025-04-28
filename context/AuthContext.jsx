@@ -41,6 +41,10 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  if (loading) {
+    return <div>Loading...</div>; // Show loading indicator while restoring session
+  }
+
   return (
     <AuthContext.Provider value={{ user, setUser, login, logout, loading }}>
       {children}

@@ -4,6 +4,8 @@ import { createNote } from "../services/notesService";
 const CreateNote = ({ onNoteAdded }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [tags, setTags] = useState(""); // New state for tags
+  const [isPinned, setIsPinned] = useState(false); // New state for pin state
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -11,9 +13,16 @@ const CreateNote = ({ onNoteAdded }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const newNote = await createNote({ title, content });
+      const newNote = await createNote({
+        title,
+        content,
+        tags: tags.split(",").map((tag) => tag.trim()), // Convert tags string to array
+        isPinned,
+      });
       setTitle("");
       setContent("");
+      setTags("");
+      setIsPinned(false);
       if (onNoteAdded) onNoteAdded(newNote); // Trigger re-fetch or update notes
     } catch (err) {
       console.error("Failed to create note:", err);
@@ -53,6 +62,30 @@ const CreateNote = ({ onNoteAdded }) => {
             onChange={(e) => setContent(e.target.value)}
             required
           ></textarea>
+        </div>
+
+        <div>
+          <label className="block mb-1 font-medium">Tags</label>
+          <input
+            type="text"
+            className="w-full border px-3 py-2 rounded-md"
+            value={tags}
+            onChange={(e) => setTags(e.target.value)}
+            placeholder="Enter tags separated by commas"
+          />
+        </div>
+
+        <div className="flex items-center">
+          <input
+            type="checkbox"
+            id="isPinned"
+            checked={isPinned}
+            onChange={(e) => setIsPinned(e.target.checked)}
+            className="mr-2"
+          />
+          <label htmlFor="isPinned" className="font-medium">
+            Pin this note
+          </label>
         </div>
 
         <button

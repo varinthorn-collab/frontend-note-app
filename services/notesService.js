@@ -8,7 +8,7 @@ export const getMyNotes = async () => {
 
 // Fetch a single note by ID
 export const getNoteById = async (noteId) => {
-  const response = await api.get(`/notes/${noteId}`);
+  const response = await api.get(`/get-note/${noteId}`);
   return response.data;
 };
 
@@ -20,12 +20,26 @@ export const createNote = async (noteData) => {
 
 // Update an existing note
 export const updateNote = async (noteId, updatedData) => {
-  const response = await api.put(`/notes/${noteId}`, updatedData);
+  const response = await api.put(`/edit-note/${noteId}`, updatedData);
   return response.data;
 };
 
 // Delete a note
 export const deleteNote = async (noteId) => {
-  const response = await api.delete(`/notes/${noteId}`);
+  const response = await api.delete(`/delete-note/${noteId}`);
+  return response.data;
+};
+
+// Search notes by title, content, or tags
+export const searchNotes = async (query) => {
+  const response = await api.get(
+    `/search-notes?query=${encodeURIComponent(query)}`
+  );
+  return response.data;
+};
+
+// Update note visibility (publish/unpublish)
+export const updateNoteVisibility = async (noteId, isPublic) => {
+  const response = await api.put(`/notes/${noteId}/visibility`, { isPublic });
   return response.data;
 };

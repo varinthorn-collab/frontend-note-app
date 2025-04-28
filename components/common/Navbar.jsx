@@ -2,12 +2,14 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 const Navbar = () => {
-  const { user } = useAuth();
-console.log(user);
+  const { user, logout } = useAuth();
   return (
     <nav className="bg-white shadow-md px-6 py-4 flex items-center justify-between">
       <div className="flex items-center space-x-4">
-        <Link to="/" className="text-xl font-bold text-blue-600">
+        <Link
+          to={user ? "/dashboard" : "/"}
+          className="text-xl font-bold text-blue-600"
+        >
           📒 NotesApp
         </Link>
       </div>
@@ -15,7 +17,7 @@ console.log(user);
       <div className="flex items-center space-x-4">
         {user ? (
           <>
-          <h3>{user.email}</h3>
+            <h3>{user.email}</h3>
             <Link
               to="/dashboard"
               className="text-gray-700 hover:text-blue-600 transition"
@@ -23,11 +25,17 @@ console.log(user);
               Dashboard
             </Link>
             <Link
-              to="/profile"
+              to={`/profile/${user._id}`}
               className="text-gray-700 hover:text-blue-600 transition"
             >
               Profile
             </Link>
+            <button
+              onClick={logout} // Call the logout function when clicked
+              className="text-red-500 hover:text-red-700 transition"
+            >
+              Logout
+            </button>
           </>
         ) : (
           <>
