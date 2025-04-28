@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await api.get("/auth/profile");
+        const response = await api.get("/mongo/auth/profile");
         setUser(response.data.user); // Restore user state
       } catch (err) {
         console.error("Not authenticated:", err);
@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await api.post("/auth/logout");
+      await api.post("/mongo/auth/logout");
       setUser(null);
       navigate("/login"); // Redirect to login page after logout
     } catch (err) {
