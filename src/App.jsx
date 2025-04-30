@@ -1,13 +1,13 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "../context/AuthContext";
-import LoginPage from "../pages/LoginPage";
-import DashboardPage from "../pages/DashboardPage";
-import ProtectedRoute from "../components/common/ProtectedRoute";
-import Navbar from "../components/common/Navbar";
-import HomePage from "../pages/HomePage";
-import CreateNote from "../pages/CreateNote";
-import NoteDetailsPage from "../pages/NoteDetailsPage";
-import PublicProfilePage from "../pages/PublicProfilePage";
+import { AuthProvider } from "./context/AuthContext";
+import LoginPage from "./pages/LoginPage";
+import DashboardPage from "./pages/DashboardPage";
+import ProtectedRoute from "./components/common/ProtectedRoute";
+import Navbar from "./components/common/Navbar";
+import HomePage from "./pages/HomePage";
+import CreateNote from "./pages/CreateNote";
+import NoteDetailsPage from "./pages/NoteDetailsPage";
+import PublicProfilePage from "./pages/PublicProfilePage";
 
 function App() {
   return (

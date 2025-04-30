@@ -33,7 +33,7 @@ export const deleteNote = async (noteId) => {
 // Search notes by title, content, or tags
 export const searchNotes = async (query) => {
   const response = await api.get(
-    `/search-notes?query=${encodeURIComponent(query)}`
+    `/mongo/search-notes?query=${encodeURIComponent(query)}`
   );
   return response.data;
 };

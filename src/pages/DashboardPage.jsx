@@ -7,7 +7,7 @@ import CreateNote from "./CreateNote";
 const DashboardPage = () => {
   const { user } = useAuth();
   const [notes, setNotes] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loadingNotes, setLoadingNotes] = useState(true);
   const [error, setError] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
@@ -20,7 +20,7 @@ const DashboardPage = () => {
       console.error(err);
       setError("Failed to load notes.");
     } finally {
-      setLoading(false);
+      setLoadingNotes(false);
     }
   };
 
@@ -54,10 +54,13 @@ const DashboardPage = () => {
     fetchNotes();
   }, []);
 
-  if (loading)
-    return <div className="text-center mt-10 text-xl">Loading...</div>;
+  if (loadingNotes)
+    return (
+      <div className="text-center mt-10 text-xl">Loading user notes...</div>
+    );
   if (error)
     return <div className="text-center mt-10 text-red-500">{error}</div>;
+  console.log(user);
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">

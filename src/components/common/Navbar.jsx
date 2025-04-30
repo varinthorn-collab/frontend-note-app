@@ -25,7 +25,7 @@ const Navbar = () => {
               Dashboard
             </Link>
             <Link
-              to={`/profile/${user._id}`}
+              to={user && user._id ? `/profile/${user._id}` : "#"}
               className="text-gray-700 hover:text-blue-600 transition"
             >
               Profile

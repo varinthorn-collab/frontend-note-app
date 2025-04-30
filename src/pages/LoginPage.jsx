@@ -24,7 +24,9 @@ const LoginPage = () => {
       navigate("/dashboard"); // Redirect after successful login
     } catch (err) {
       console.error(err);
-      setError(err?.response?.data?.message || "Login failed. Please try again.");
+      setError(
+        err?.response?.data?.message || "Login failed. Please try again."
+      );
     } finally {
       setLoading(false);
     }
@@ -33,7 +35,9 @@ const LoginPage = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center mb-6">Login to Your Account</h2>
+        <h2 className="text-2xl font-bold text-center mb-6">
+          Login to Your Account
+        </h2>
 
         {error && (
           <div className="bg-red-100 text-red-700 px-4 py-2 rounded mb-4 text-center">
@@ -43,7 +47,10 @@ const LoginPage = () => {
 
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700"
+            >
               Email Address
             </label>
             <input
@@ -58,7 +65,10 @@ const LoginPage = () => {
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700"
+            >
               Password
             </label>
             <input
@@ -81,7 +91,10 @@ const LoginPage = () => {
         </form>
 
         <p className="text-center text-sm text-gray-500 mt-4">
-          Don't have an account? <a href="/signup" className="text-blue-600 hover:underline">Sign up</a>
+          Don't have an account?{" "}
+          <a href="/signup" className="text-blue-600 hover:underline">
+            Sign up
+          </a>
         </p>
       </div>
     </div>
