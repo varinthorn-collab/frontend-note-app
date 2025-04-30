@@ -60,7 +60,6 @@ const DashboardPage = () => {
     );
   if (error)
     return <div className="text-center mt-10 text-red-500">{error}</div>;
-  console.log(user);
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">

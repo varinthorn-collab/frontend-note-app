@@ -13,9 +13,9 @@ export const logoutUser = async () => {
   return response.data;
 };
 
-export const signupUser = async (name, email, password) => {
+export const signupUser = async ({ fullName, email, password }) => {
   const response = await api.post("/mongo/auth/register", {
-    name,
+    fullName,
     email,
     password,
   });
