@@ -1,1 +1,44 @@
 @import "tailwindcss";
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+
+/* Optional: Earth tone variables (for additional theming flexibility) */
+:root {
+  --earth-bg: #f5f3ef;
+  --earth-surface: #fdfaf6;
+  --earth-border: #e0dcd5;
+  --earth-text: #4e463b;
+  --earth-text-hover:#575553;
+  --earth-muted-text: #7d7466;
+  --earth-accent: #8d7b68;
+  --earth-accent-hover: #7a6b59;
+  --earth-input-border: #d6cfc7;
+  --earth-focus-ring: #b8a48d;
+  --earth-error-bg: #fef2f2;
+  --earth-error-text: #b91c1c;
+  --earth-error-border: #fca5a5;
+  --white: #fff;
+}
+
+@layer components {
+    .container__div {
+      @apply mx-auto w-full max-w-(--width-max) min-w-(--width-min);
+    }
+  }
+  
+  @layer base {
+    body {
+      font-family: "Noto Sans", "Noto Sans Thai", sans-serif;
+      color: var(--color-text);
+    }
+    h1 {@apply text-3xl;}
+    h2 {@apply text-2xl;}
+    h3 {@apply text-xl;}
+  }
+  
+  /* *{
+  outline: red solid 1px;
+  } */
