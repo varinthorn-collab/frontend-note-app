@@ -62,77 +62,115 @@ const NoteDetailsPage = () => {
   };
 
   if (loading)
-    return <div className="text-center mt-10 text-xl">Loading...</div>;
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-[var(--earth-bg)] text-[var(--earth-text)]">
+        <div className="text-xl">Loading note details...</div>
+      </div>
+    );
   if (error)
-    return <div className="text-center mt-10 text-red-500">{error}</div>;
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-[var(--earth-bg)]">
+        <div className="bg-[var(--earth-error-bg)] text-[var(--earth-error-text)] px-4 py-3 rounded border border-[var(--earth-error-border)]">
+          {error}
+        </div>
+      </div>
+    );
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8">
-      {isEditing ? (
-        <div>
-          <input
-            type="text"
-            name="title"
-            value={formData.title}
-            onChange={handleInputChange}
-            className="w-full border px-3 py-2 rounded-md mb-4"
-            placeholder="Title"
-          />
-          <textarea
-            name="content"
-            value={formData.content}
-            onChange={handleInputChange}
-            className="w-full border px-3 py-2 rounded-md mb-4 min-h-[150px]"
-            placeholder="Content"
-          ></textarea>
-          <input
-            type="text"
-            name="tags"
-            value={formData.tags}
-            onChange={handleInputChange}
-            className="w-full border px-3 py-2 rounded-md mb-4"
-            placeholder="Tags (comma-separated)"
-          />
-          <div className="flex items-center mb-4">
-            <label className="mr-2">Pinned:</label>
-            <input
-              type="checkbox"
-              checked={formData.isPinned}
-              onChange={handleTogglePin}
-            />
-          </div>
-          <button
-            onClick={handleSaveNote}
-            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
-          >
-            Save Note
-          </button>
-        </div>
-      ) : (
-        <div>
-          <h1 className="text-3xl font-bold mb-4">{note.title}</h1>
-          <p className="text-gray-700 mb-4">{note.content}</p>
-          <div className="flex flex-wrap gap-2 mb-4">
-            {note.tags.map((tag, index) => (
-              <span
-                key={index}
-                className="bg-blue-100 text-blue-600 text-xs font-medium px-2 py-1 rounded-full"
+    <div className="min-h-screen bg-[var(--earth-bg)] text-[var(--earth-text)] py-12">
+      <div className="max-w-3xl mx-auto bg-[var(--earth-surface)] border border-[var(--earth-border)] rounded-lg shadow-lg p-8">
+        {isEditing ? (
+          // --- Edit Mode ---
+          <div className="space-y-4">
+            <div>
+              <label htmlFor="title" className="block text-sm font-medium text-[var(--earth-text)] mb-1">Title</label>
+              <input
+                id="title"
+                type="text"
+                name="title"
+                value={formData.title}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 border border-[var(--earth-input-border)] rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[var(--earth-focus-ring)]"
+                placeholder="Note Title"
+              />
+            </div>
+            <div>
+              <label htmlFor="content" className="block text-sm font-medium text-[var(--earth-text)] mb-1">Content</label>
+              <textarea
+                id="content"
+                name="content"
+                value={formData.content}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 border border-[var(--earth-input-border)] rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[var(--earth-focus-ring)] min-h-[200px]"
+                placeholder="Write your note here..."
+              ></textarea>
+            </div>
+            <div>
+              <label htmlFor="tags" className="block text-sm font-medium text-[var(--earth-text)] mb-1">Tags (comma-separated)</label>
+              <input
+                id="tags"
+                type="text"
+                name="tags"
+                value={formData.tags}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 border border-[var(--earth-input-border)] rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[var(--earth-focus-ring)]"
+                placeholder="e.g., work, personal, ideas"
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <input
+                id="isPinned"
+                type="checkbox"
+                className="h-4 w-4 rounded border-gray-300 text-[var(--earth-accent)] focus:ring-[var(--earth-accent)]"
+                checked={formData.isPinned}
+                onChange={handleTogglePin}
+              />
+              <label htmlFor="isPinned" className="text-sm font-medium text-[var(--earth-text)]">Pin this note</label>
+            </div>
+            <div className="flex gap-3 pt-4">
+              <button
+                onClick={handleSaveNote}
+                className="bg-[var(--earth-accent)] text-white px-4 py-2 rounded-md hover:bg-[var(--earth-accent-hover)] transition duration-300"
               >
-                #{tag}
-              </span>
-            ))}
+                Save Changes
+              </button>
+              <button
+                onClick={() => setIsEditing(false)} // Cancel editing
+                className="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 transition duration-300"
+              >
+                Cancel
+              </button>
+            </div>
           </div>
-          {note.isPinned && (
-            <div className="text-yellow-500 font-bold mb-4">📌 Pinned</div>
-          )}
-          <button
-            onClick={() => setIsEditing(true)}
-            className="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition"
-          >
-            Edit Note
-          </button>
-        </div>
-      )}
+        ) : (
+          // --- View Mode ---
+          <div>
+            <h1 className="text-3xl font-bold mb-4 text-[var(--earth-text)]">{note.title}</h1>
+            <p className="text-[var(--earth-text-secondary)] mb-6 whitespace-pre-wrap">{note.content}</p>
+            <div className="flex flex-wrap gap-2 mb-4">
+              {note.tags.map((tag, index) => (
+                <span
+                  key={index}
+                  className="bg-[var(--earth-tag-bg)] text-[var(--earth-tag-text)] text-xs font-medium px-2.5 py-1 rounded-full"
+                >
+                  #{tag}
+                </span>
+              ))}
+            </div>
+            {note.isPinned && (
+              <div className="text-red-800 font-bold mb-4 text-sm flex items-center gap-1">
+                <span className="text-lg">📌</span> Pinned
+              </div>
+            )}
+            <button
+              onClick={() => setIsEditing(true)}
+              className="bg-[var(--earth-accent)] text-white px-4 py-2 rounded-md hover:bg-[var(--earth-accent-hover)] transition duration-300"
+            >
+              Edit Note
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

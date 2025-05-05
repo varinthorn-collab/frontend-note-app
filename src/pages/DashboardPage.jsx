@@ -52,44 +52,55 @@ const DashboardPage = () => {
 
   useEffect(() => {
     fetchNotes();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Assuming fetchNotes doesn't rely on changing props/state not listed
 
   if (loadingNotes)
     return (
-      <div className="text-center mt-10 text-xl">Loading user notes...</div>
+      <div className="flex items-center justify-center min-h-screen bg-[var(--earth-bg)] text-[var(--earth-text)]">
+        <div className="text-xl">Loading user notes...</div>
+      </div>
     );
   if (error)
-    return <div className="text-center mt-10 text-red-500">{error}</div>;
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-[var(--earth-bg)]">
+        <div className="bg-[var(--earth-error-bg)] text-[var(--earth-error-text)] px-4 py-3 rounded border border-[var(--earth-error-border)]">
+          {error}
+        </div>
+      </div>
+    );
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">
+    <div className="min-h-screen bg-[var(--earth-bg)] text-[var(--earth-text)] py-8">
+      <div className="max-w-6xl mx-auto px-4">
+        <h1 className="text-3xl text-center font-bold mb-6">
         Welcome, {user?.name || "User"} 👋
       </h1>
 
       {/* Search Bar */}
-      <form onSubmit={handleSearch} className="mb-6">
+      <form onSubmit={handleSearch} className="mb-6 flex gap-2">
         <input
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search notes by title, content, or tags"
-          className="w-full border px-3 py-2 rounded-md"
+          className="flex-grow px-3 py-2 border border-[var(--earth-input-border)] rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[var(--earth-focus-ring)]"
         />
         <button
           type="submit"
-          className="mt-2 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
+          className="bg-[var(--earth-accent)] text-white px-4 py-2 rounded-md hover:bg-[var(--earth-accent-hover)] transition duration-300"
         >
           Search
         </button>
       </form>
 
-      {/* Button to Open Modal */}
       <button
         onClick={() => setIsModalOpen(true)}
-        className="mb-6 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition"
+        className="mb-6 flex items-center gap-2 bg-[var(--earth-text)] cursor-pointer text-white px-4 py-2 rounded-md hover:bg-[var(--earth-text-hover)] transition duration-300"
       >
-        Create Note
+
+        <span className="text-xl font-semibold leading-none">+</span>
+        <span>Create Note</span>
       </button>
 
       {/* Modal */}
@@ -99,11 +110,11 @@ const DashboardPage = () => {
           onClick={() => setIsModalOpen(false)} // Close modal when clicking on the backdrop
         >
           <div
-            className="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg relative"
+            className="bg-[var(--earth-surface)] rounded-lg shadow-xl p-6 w-full max-w-lg relative border border-[var(--earth-border)]"
             onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the modal
           >
             <button
-              onClick={() => setIsModalOpen(false)}
+              onClick={() => setIsModalOpen(false)} // Explicit close button
               className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
             >
               ✖
@@ -119,7 +130,9 @@ const DashboardPage = () => {
       )}
 
       {Array.isArray(notes) && notes.length === 0 ? (
-        <p className="text-gray-600">You have no notes yet. Start writing!</p>
+        <p className="text-center text-[var(--earth-text-secondary)] mt-10">
+          You have no notes yet. Click "Create Note" to start writing!
+        </p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {notes.map((note) => (
@@ -127,6 +140,7 @@ const DashboardPage = () => {
           ))}
         </div>
       )}
+      </div>
     </div>
   );
 };
