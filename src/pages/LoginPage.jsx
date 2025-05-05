@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {  Link } from "react-router-dom"; // Import Link
 import { loginUser } from "../services/authService";
 import { useAuth } from "../context/AuthContext";
+import api from "../services/api"; // Import the configured api instance
 
 const LoginPage = () => {
-  const { setUser } = useAuth();
-  const navigate = useNavigate();
+  const { login } = useAuth(); // Get the login function from context
+  // No need for navigate directly here if context handles it
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,9 +20,26 @@ const LoginPage = () => {
     setLoading(true);
 
     try {
-      const data = await loginUser(email, password);
-      setUser(data.user); // Save user to AuthContext
-      navigate("/dashboard"); // Redirect after successful login
+      // 1. Call loginUser service - it should handle the token internally (e.g., store it)
+      // Pass credentials as an object
+      await loginUser({ email, password });
+
+      // 2. If loginUser was successful (didn't throw), fetch the user profile
+      // The api instance should now automatically send the token
+      console.log("Attempting to fetch profile...");
+      const profileResponse = await api.get("/mongo/auth/profile");
+      console.log("Profile Response Received:", profileResponse);
+
+      // 3. Check if profile fetch was successful and contains user data
+      console.log("Profile Data:", profileResponse.data);
+      if (profileResponse.data && profileResponse.data.user) {
+        // 4. Call the context's login function with the fetched user data
+        // This will update the user state in context AND navigate to /dashboard
+        login(profileResponse.data.user);
+      } else {
+        throw new Error("Failed to fetch user profile after login."); // Or handle more gracefully
+      }
+
     } catch (err) {
       console.error(err);
       setError(

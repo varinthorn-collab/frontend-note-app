@@ -2,7 +2,7 @@ import api from "./api"; // Our Axios instance withCredentials=true
 
 // Fetch all notes for the logged-in user
 export const getMyNotes = async () => {
-  const response = await api.get("/mongo/get-all-notes");
+  const response = await api.get("/mongo/get-notes-by-user");
   return response.data;
 };
 

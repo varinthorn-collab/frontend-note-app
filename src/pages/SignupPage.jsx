@@ -7,8 +7,9 @@ const SignupPage = () => {
   const { setUser } = useAuth();
   const navigate = useNavigate();
 
-  const [fullName, setFullName] = useState("");
+  const [name, setname] = useState("");
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -26,7 +27,7 @@ const SignupPage = () => {
 
     setLoading(true);
     try {
-      const data = await signupUser({ fullName, email, password });
+      const data = await signupUser({ name, username, email, password });
       setUser(data.user); // Save user to AuthContext
       navigate("/dashboard"); // Redirect on success
     } catch (err) {
@@ -55,17 +56,35 @@ const SignupPage = () => {
         <form onSubmit={handleSignup} className="space-y-4">
           <div>
             <label
-              htmlFor="fullName"
+              htmlFor="name"
               className="block text-sm font-medium text-[var(--earth-text)]"
             >
               Full Name
             </label>
             <input
-              id="fullName"
+              id="name"
               type="text"
               className="mt-1 block w-full px-3 py-2 border border-[var(--earth-input-border)] rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-[var(--earth-focus-ring)]"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
+              value={name}
+              onChange={(e) => setname(e.target.value)}
+              required
+              autoFocus
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="Username"
+              className="block text-sm font-medium text-[var(--earth-text)]"
+            >
+              Username
+            </label>
+            <input
+              id="Username"
+              type="text"
+              className="mt-1 block w-full px-3 py-2 border border-[var(--earth-input-border)] rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-[var(--earth-focus-ring)]"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               required
               autoFocus
             />

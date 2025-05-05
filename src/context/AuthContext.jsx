@@ -26,6 +26,9 @@ export const AuthProvider = ({ children }) => {
     fetchProfile();
   }, []);
 
+
+
+
   const login = (userData) => {
     setUser(userData); // Save user info in the context
     navigate("/dashboard"); // Redirect to notes page after login

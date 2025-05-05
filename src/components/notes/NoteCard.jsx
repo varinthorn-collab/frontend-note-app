@@ -1,18 +1,18 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import { updateNoteVisibility } from "../../services/notesService";
+// import { useState } from "react";
+// import { updateNoteVisibility } from "../../services/notesService";
 
 const NoteCard = ({ note, onDelete }) => {
-  const [isPublic, setIsPublic] = useState(note.isPublic); // Local state for visibility
+  // const [isPublic, setIsPublic] = useState(note.isPublic); // Local state for visibility
 
-  const handleToggleVisibility = async () => {
-    try {
-      const updatedNote = await updateNoteVisibility(note._id, !isPublic);
-      setIsPublic(updatedNote.note.isPublic); // Update local state to trigger re-render
-    } catch (err) {
-      console.error("Failed to update note visibility:", err);
-    }
-  };
+  // const handleToggleVisibility = async () => {
+  //   try {
+  //     const updatedNote = await updateNoteVisibility(note._id, !isPublic);
+  //     setIsPublic(updatedNote.note.isPublic); // Update local state to trigger re-render
+  //   } catch (err) {
+  //     console.error("Failed to update note visibility:", err);
+  //   }
+  // };
 
   return (
     <div className="bg-white shadow-md rounded-lg p-5 flex flex-col justify-between hover:shadow-lg transition-shadow duration-300">
@@ -70,7 +70,7 @@ const NoteCard = ({ note, onDelete }) => {
           >
             Delete
           </button>
-          <button
+          {/* <button
             onClick={handleToggleVisibility}
             className={`${
               isPublic
@@ -79,7 +79,7 @@ const NoteCard = ({ note, onDelete }) => {
             } transition`}
           >
             {isPublic ? "Unpublish" : "Publish"}
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

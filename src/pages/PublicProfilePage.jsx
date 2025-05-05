@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getPublicProfile, getPublicNotes } from "../services/profileService";
+import { getPublicProfile } from "../services/profileService";
+// import {  getPublicNotes } from "../services/profileService";
 
 const PublicProfilePage = () => {
   const { userId } = useParams(); // Get user ID from the URL
   const [profile, setProfile] = useState(null);
-  const [notes, setNotes] = useState([]);
+  // const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -14,10 +15,10 @@ const PublicProfilePage = () => {
       try {
         const profileData = await getPublicProfile(userId);
 
-        const notesData = await getPublicNotes(userId);
+        // const notesData = await getPublicNotes(userId);
         setProfile(profileData.user);
 
-        setNotes(notesData.notes);
+        // setNotes(notesData.notes);
       } catch (err) {
         console.error("Failed to fetch public profile or notes:", err);
         setError("Failed to load profile or notes.");
@@ -37,11 +38,11 @@ const PublicProfilePage = () => {
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-6">
-        {profile.fullName}'s Public Profile
+        {profile.name}'s Public Profile
       </h1>
       <p className="text-gray-600 mb-6">Email: {profile.email}</p>
 
-      <h2 className="text-2xl font-bold mb-4">Public Notes</h2>
+      {/* <h2 className="text-2xl font-bold mb-4">Public Notes</h2>
       {notes.length === 0 ? (
         <p className="text-gray-600">No public notes available.</p>
       ) : (
@@ -70,7 +71,7 @@ const PublicProfilePage = () => {
             </div>
           ))}
         </div>
-      )}
+      )} */}
     </div>
   );
 };
