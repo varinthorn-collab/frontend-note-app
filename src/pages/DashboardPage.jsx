@@ -52,8 +52,7 @@ const DashboardPage = () => {
 
   useEffect(() => {
     fetchNotes();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Assuming fetchNotes doesn't rely on changing props/state not listed
+  }, []); 
 
   if (loadingNotes)
     return (
