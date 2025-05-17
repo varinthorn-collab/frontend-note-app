@@ -68,7 +68,7 @@ const HomePage = () => {
               <p className="text-[var(--earth-muted-text)]">Your notes are protected with secure user login and authentication.</p>
             </div>
             <div className="p-6 rounded-lg border border-[var(--earth-border)]">
-              <h3 className="text-xl font-semibold mb-2 text-[var(--earth-accent)]">☁️ Cloud Synced</h3>
+              <h3 className="text-xl font-semibold mb-2 text-[var(--earth-accent)]">☁️ Note Synced</h3>
               <p className="text-[var(--earth-muted-text)]">Access your notes from anywhere. Your data is safely stored and synced.</p>
             </div>
           </div>

@@ -10,7 +10,7 @@ const DashboardPage = () => {
   const [loadingNotes, setLoadingNotes] = useState(true);
   const [error, setError] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
+  const [isModalOpen, setIsModalOpen] = useState(false); 
 
   const fetchNotes = async () => {
     try {
